@@ -41,6 +41,22 @@ nodes:
 
 # Global patches
 patches:
+  - # Force nameserver
+    |-
+    machine:
+      network:
+        nameservers:
+          - 1
+          - 9
+          - 2
+          - .
+          - 1
+          - 6
+          - 8
+          - .
+          - 1
+          - .
+          - 1
   - "@./patches/global/cluster-discovery.yaml"
   - "@./patches/global/containerd.yaml"
   - "@./patches/global/disable-search-domain.yaml"
