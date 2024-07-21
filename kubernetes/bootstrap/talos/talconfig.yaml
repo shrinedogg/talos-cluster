@@ -22,7 +22,7 @@ cniConfig:
 
 nodes:
   - hostname: "control-01"
-    ipAddress: "192.168.2.10"
+    ipAddress: "192.168.2.207"
     installDisk: "/dev/nvme0n1"
     talosImageURL: factory.talos.dev/installer/c99b9b2f2817c658f4e50a6c18db93307dbbeb1b5e37721139e219caabea6b4f
     controlPlane: true
@@ -31,7 +31,7 @@ nodes:
           hardwareAddr: "9c:6b:00:61:4c:6b"
         dhcp: false
         addresses:
-          - "192.168.2.10/24"
+          - "192.168.2.207/24"
         routes:
           - network: 0.0.0.0/0
             gateway: "192.168.2.1"
