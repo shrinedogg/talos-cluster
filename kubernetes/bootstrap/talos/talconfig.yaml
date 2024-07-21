@@ -6,13 +6,13 @@ talosVersion: v1.7.5
 kubernetesVersion: v1.30.2
 
 clusterName: "federation-cluster"
-endpoint: https://192.168.2.207:6443
+endpoint: https://192.168.2.10:6443
 clusterPodNets:
   - "10.69.0.0/16"
 clusterSvcNets:
   - "10.96.0.0/16"
 additionalApiServerCertSans: &sans
-  - "192.168.2.207"
+  - "192.168.2.10"
   - 127.0.0.1 # KubePrism
 additionalMachineCertSans: *sans
 
@@ -22,22 +22,17 @@ cniConfig:
 
 nodes:
   - hostname: "control-01"
-    ipAddress: "192.168.2.207"
+    ipAddress: ""
     installDisk: "/dev/nvme0n1"
     talosImageURL: factory.talos.dev/installer/c99b9b2f2817c658f4e50a6c18db93307dbbeb1b5e37721139e219caabea6b4f
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "9c:6b:00:61:4c:6b"
-        dhcp: false
-        addresses:
-          - "192.168.2.207/24"
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "192.168.2.1"
+        dhcp: true
         mtu: 1500
         vip:
-          ip: "192.168.2.207"
+          ip: "192.168.2.10"
 
 # Global patches
 patches:
