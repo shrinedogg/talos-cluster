@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: kube-prometheus-stack
-  namespace: monitoring
+  namespace: observability
 spec:
   interval: 30m
   timeout: 15m
@@ -27,9 +27,9 @@ spec:
       retries: 3
   dependsOn:
     - name: prometheus-operator-crds
-      namespace: monitoring
-    # - name: openebs
-      # namespace: openebs-system
+      namespace: observability
+    - name: openebs
+      namespace: openebs-system
     # - name: thanos
       # namespace: observability
   values:
@@ -40,7 +40,7 @@ spec:
       # ingress:
         # enabled: true
         # ingressClassName: external
-        # hosts: ["alertmanager.federationspace.net"]
+        # hosts: ["alertmanager.${SECRET_DOMAIN}"]
         # pathType: Prefix
       alertmanagerSpec:
         replicas: 2
@@ -88,7 +88,7 @@ spec:
       # ingress:
         # enabled: true
         # ingressClassName: external
-        # hosts: ["prometheus.federationspace.net"]
+        # hosts: ["prometheus.${SECRET_DOMAIN}"]
         # pathType: Prefix
       thanosService:
         enabled: true
@@ -162,8 +162,8 @@ spec:
       # forceDeployDashboards: true
       ingress:
         enabled: true
-        # annotations:
-          # external-dns.alpha.kubernetes.io/target: internal.devbu.io
-        ingressClassName: external
-        hosts: ["grafana.biggs.dog"]
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "grafana.${SECRET_DOMAIN}"
+        hosts:
+          - host: "grafana.${SECRET_DOMAIN}"
         pathType: Prefix
